@@ -21,10 +21,9 @@
 <div class="education_date">
 
   <div id="start_date" class="date_section">
-
     <label for="">Start Date</label>
     <div class="date_block">
-      <select class="" name="start_date">
+      <select class="" name="educations[0][start_date][month]">
         <option selected value="">Select A Month</option>
         <option value="0">January</option>
         <option value="1">February</option>
@@ -39,7 +38,7 @@
         <option value="10">November</option>
         <option value="11">December</option>
       </select>
-      <select class="" name="start_year">
+      <select class="" name="educations[0][start_date][year]">
         <option selected value="">Select A Year</option>
         <option value="2019">2019</option>
         <option value="2018">2018</option>
@@ -69,7 +68,7 @@
 
     <label for="">End Date</label>
     <div class="date_block">
-      <select class="" name="start_date">
+      <select class="" name="educations[0][end_date][month]">
         <option selected value="">Select A Month</option>
         <option value="0">January</option>
         <option value="1">February</option>
@@ -84,7 +83,7 @@
         <option value="10">November</option>
         <option value="11">December</option>
       </select>
-      <select class="" name="start_year">
+      <select class="" name="educations[0][end_date][year]">
         <option selected value="">Select A Year</option>
         <option value="2019">2019</option>
         <option value="2018">2018</option>

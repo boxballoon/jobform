@@ -48,8 +48,8 @@ if ( $disciplines_err ) {
   // echo "<label>Disciplines<select name='disciplines'><option value=''>Select A Discipline</option>";
 
   echo "<label for='disciplines'>Disciplines</label>";
-  echo "<select name='disciplines' required><option value=''>Select A Discipline</option>";
-
+  echo "<select name='educations[0][discipline_id]'><option value=''>Select A Discipline</option>";
+  
   //echo $disciplines;
   for ( $z = 0; $z <= $disciplines_count; $z++) {
 

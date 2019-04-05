@@ -12,28 +12,53 @@ Property of Romeo Systems, Inc.
 © Romeo Systems, Inc. 2019
 */
 
+// $resume = $_FILES['resume']['tmp_name'];
+// $file = file_get_contents($resume);
+// die(print_r( $file ));
+
+
 // POST REQUEST VARIABLES
 $job_id = $_REQUEST['romeo_job_post_id']; // "4220907002"; // The id of the job.
 $job_title = $_REQUEST['romeo_job_post_title']; // The name of the job being applied for.
+$post_body = $_REQUEST;
+$post_body['resume'] = '@' . $_FILES['resume']['tmp_name'];
+$post_body['cover_letter'] = '@' . $_FILES['cover_letter']['tmp_name'];
+
+
+$educations = $post_body['educations'];
+$new_eds = array();
+foreach ($educations as $key => $value) {
+  if ($key != "0") {
+    $new_eds[] = $educations[$key];
+  }
+}
+$post_body['educations'] = $new_eds;
+
+
+unset($post_body['romeo_job_post_id']);
+unset($post_body['romeo_job_post_title']);
+unset($post_body['submit']);
+// print_r(json_encode($post_body));
+// die(print_r(json_encode( $_REQUEST )));
 $first_name = $_REQUEST['first_name']; // First Name
-$last_name = $_REQUEST['last_name']; // Last Name
-$email = $_REQUEST['email']; // Email
-$phone = $_REQUEST['phone']; // Phone
-$resume = $_FILES['resume']['name']; // Resume
-$cover_letter = $_FILES['cover_letter']['name']; // Cover Letter
-$question_5532287002 = $_REQUEST['question_5532287002']; // LinkedIn Profile
-$question_5532288002 = $_REQUEST['question_5532288002']; // Website
-$question_5532289002 = $_REQUEST['question_5532289002']; // How did you hear about this job?
-$question_5532290002 = $_REQUEST['question_5532290002']; // What college/university did you attend?
-$eeoc_gender = $_REQUEST['gender']; // Select Menu. Gender
-$eeoc_race = $_REQUEST['race']; // Select Menu. Race
-$eeoc_veteran_status = $_REQUEST['veteran_status']; // Select Menu. Veteran Status
-$disability_status = $_REQUEST['disability_status']; // Select Menu. Disability Status
+// $last_name = $_REQUEST['last_name']; // Last Name
+// $email = $_REQUEST['email']; // Email
+// $phone = $_REQUEST['phone']; // Phone
+// $resume = $_FILES['resume']['name']; // Resume
+// $cover_letter = $_FILES['cover_letter']['name']; // Cover Letter
+// $question_5532287002 = $_REQUEST['question_5532287002']; // LinkedIn Profile
+// $question_5532288002 = $_REQUEST['question_5532288002']; // Website
+// $question_5532289002 = $_REQUEST['question_5532289002']; // How did you hear about this job?
+// $question_5532290002 = $_REQUEST['question_5532290002']; // What college/university did you attend?
+// $eeoc_gender = $_REQUEST['gender']; // Select Menu. Gender
+// $eeoc_race = $_REQUEST['race']; // Select Menu. Race
+// $eeoc_veteran_status = $_REQUEST['veteran_status']; // Select Menu. Veteran Status
+// $disability_status = $_REQUEST['disability_status']; // Select Menu. Disability Status
 
 // EDUCATION
-$school = $_REQUEST['school']; // ID of the school.
-$degree = $_REQUEST['degrees']; // ID of the school.
-$discipline = $_REQUEST['disciplines']; // ID of the school.
+// $school = $_REQUEST['school']; // ID of the school.
+// $degree = $_REQUEST['degrees']; // ID of the school.
+// $discipline = $_REQUEST['disciplines']; // ID of the school.
 
 ?>
 
@@ -54,10 +79,6 @@ $discipline = $_REQUEST['disciplines']; // ID of the school.
           echo "Thank You <span class='highlight'>$first_name</span> <br> For Submitting Your Application For <br> <span class='highlight'>$job_title</span>"
         ?>
         <hr>
-
-
-
-
 
         <?php
         $post_base_url = "https://boards-api.greenhouse.io/v1/boards/romeopower/jobs/";
@@ -80,7 +101,7 @@ $discipline = $_REQUEST['disciplines']; // ID of the school.
           "disability_status": $disability_status
         };
         */
-
+/*
         $post_fields = "{\n
           \"first_name\": \"$first_name\",\n
           \"last_name\": \"$last_name\",\n
@@ -97,7 +118,7 @@ $discipline = $_REQUEST['disciplines']; // ID of the school.
           \"veteran_status\": $eeoc_veteran_status,\n
           \"disability_status\": $disability_status  \n
         }";
-
+*/
         $post_curl = curl_init();
         $post_array = array(
           CURLOPT_URL => $post_base_url . $job_id,
@@ -107,10 +128,10 @@ $discipline = $_REQUEST['disciplines']; // ID of the school.
           CURLOPT_TIMEOUT => 30,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS => $post_fields,
+          CURLOPT_POSTFIELDS => $post_body,
           CURLOPT_HTTPHEADER => array(
             "Authorization: Basic ZjcyZDgyYjRjOTRmYjZkNDFjZTdiZTY1NTE0OTljZGUtMjo=",
-            "Content-Type: application/json",
+            "Content-Type: multipart/form-data",
             "Postman-Token: 2dcc7eb5-46ee-4b02-8581-ec3db106317f",
             "cache-control: no-cache"
           ),
@@ -123,6 +144,10 @@ $discipline = $_REQUEST['disciplines']; // ID of the school.
 
         curl_close($post_curl);
 
+        // print_r( $post_err );
+        // print_r( "post_response:");
+        // die(print_r( $post_response ));
+
         if ($post_err) {
           echo "cURL Error #:" .$post_err;
         } else {
@@ -131,18 +156,6 @@ $discipline = $_REQUEST['disciplines']; // ID of the school.
         }
 
         ?>
-
-
-
-
-
-
-
-
-
-
-
-
 
         <hr>
         <ul>

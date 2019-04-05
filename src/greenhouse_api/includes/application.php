@@ -54,13 +54,14 @@ if ( $job_err ) {
   for ( $z = 0; $z <= $questions_count; $z++) {
 
       $question_label = $questions[$z]['label'];
+      $question_required = $questions[$z]['required'] ? "required" : "";
       $question_name = $questions[$z]['fields'][0]['name'];
       $question_type = substr( $questions[$z]['fields'][0]['type'] , 6 );
 
       // echo "<label>$question_label <br><input type='$question_type' name='$question_name' /></label><br>";
 
       echo "<label for='$question_name'>$question_label</label>";
-      echo "<input id='$question_name' type='$question_type' name='$question_name' required>";
+      echo "<input id='$question_name' type='$question_type' name='$question_name' $question_required>";
 
   }
 

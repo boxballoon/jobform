@@ -48,8 +48,8 @@ if ( $degrees_err ) {
   // echo "<label>Degrees<select name='degrees'><option></option>";
 
   echo "<label for='degrees'>Degrees</label>";
-  echo "<select name='degrees' required><option value=''>Select A Degree</option>";
-
+  echo "<select name='educations[0][degree_id]'><option value=''>Select A Degree</option>";
+  
   //echo $degrees;
   for ( $z = 0; $z <= $degrees_count; $z++ ) {
 
